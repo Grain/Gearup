@@ -118,27 +118,41 @@ var skills = [
             },
         ],
     },
+    {
+        name: "Linux/Unix",
+        requiredBy: ["QA Tester"],
+        resources: [
+            {
+                name: "Google",
+                url: "http://google.ca",
+                imageUrl: "http://images.dailytech.com/nimage/G_is_For_Google_New_Logo_Thumb.png",
+                trusted: true,
+                votes: 25,
+                free: true,
+                status: "InProgress",
+            },
+        ],
+    },
 ];
 $(document).ready(function () {
     // LANDING
     $("#want-to-be").on('keyup', function (e) {
         if (e.keyCode == 13) {
-            role = $("#want-to-be").val();
-
-            window.scrollTo(0, 150);
-            $("#options-col").hide();
-            let skillsRowElement = $("#skills-row");
-
-            $(".skills-btn").remove();
-
-            let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
-            for(let i = 0; i < selectedSkills.length; ++i) {
-                skillsRowElement.prepend(`<button class="btn btn-default skills-btn" type="button">${selectedSkills[i].name}</button>`);
-            }
-
-            skillsRowElement.show();
+            selectSkill();
         }
     });
+    $("#qa-btn").click(function () {
+        $("#want-to-be").val($("#qa-btn").text());
+        selectSkill();
+    })
+    $("#support-btn").click(function () {
+        $("#want-to-be").val($("#support-btn").text());
+        selectSkill();
+    })
+    $("#it-btn").click(function () {
+        $("#want-to-be").val($("#it-btn").text());
+        selectSkill();
+    })
     $(".list-group-item").click(function (e) {
         if ($(this).hasClass("unchecked-list-group")) {
             $(this).removeClass("unchecked-list-group");
@@ -162,6 +176,23 @@ $(document).ready(function () {
     // skills required by our role
     // skillsElement.hide();
 });
+
+function selectSkill() {
+    role = $("#want-to-be").val();
+
+    window.scrollTo(0, 150);
+    $("#options-col").hide();
+    let skillsRowElement = $("#skills-row");
+
+    $(".skills-btn").remove();
+
+    let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
+    for (let i = 0; i < selectedSkills.length; ++i) {
+        skillsRowElement.prepend(`<button class="btn btn-default skills-btn" type="button">${selectedSkills[i].name}</button>`);
+    }
+
+    skillsRowElement.show();
+}
 
 function makeSkill(element, skill) {
     let skillElement = $(`<div class="row">`);
