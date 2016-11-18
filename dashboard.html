@@ -80,11 +80,14 @@
     height: 135px;
     border-radius: 0px !important;
     margin: 10px !important;
-    border:1px solid #008fb3 !important;
+    border:1px solid #5DBCD2 !important;
     background-color:transparent !important;
     background-image:none !important;
     display:inline-block !important;
     max-width:130px !important;
+  }
+  .skills-btn:hover {
+    border-width: 3px !important;
   }
   .skills-btn-active {
     color:white !important;
@@ -134,6 +137,21 @@
     margin-left:250px;
     display:none;
   }
+
+  #progress {
+    position: absolute;
+    text-align: center;
+    border-radius: 30px;
+    border: 2px solid grey;
+    background: white;
+    padding: 20px;
+    width: 500px;
+    height: 60px;
+
+    z-index: 999;
+    top: calc(100% - 100px);
+    left: calc(50% - 250px);
+  }
 </style>
 
 
@@ -158,16 +176,19 @@
       </div><!-- /.col-lg-4 -->
     </div>
     
-    <h2 id="im-learning">I'm learning...</h2>
+    <h2 id="im-learning">Now, I already know</h2>
 
     <div class="row" id="skills-row">
       <br>
       <button id="next-btn" class="btn btn-default" type="button">I'm done</button>
-      <!-- /.col-lg-4 -->
-    </div><!-- /.row -->
+    </div>
   </div>
 
-  <span id="skills"></span>
+  <div id="skills-container">
+    <span id="skills"></span>
+    <div id="progress">
+    </div>
+  </div>
 
   <div id="dialog" title="Title" style="display:none;">
     <p id="dialogText"></p>

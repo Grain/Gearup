@@ -2,6 +2,10 @@ var ROW_SIZE = 4;
 
 var role = "QA Tester"; // TODO
 var freeOnly = true;
+var excludedSkills = [];
+var totalSkills;
+
+var selectedSkills;
 
 var skills = [
     {
@@ -134,48 +138,54 @@ var skills = [
         ],
     },
 ];
-$(document).ready(function () {
+$(document).ready(function() {
     // LANDING
-    $("#want-to-be").on('keyup', function (e) {
+    $("#want-to-be").on('keyup', function(e) {
         if (e.keyCode == 13) {
             selectSkill();
         }
     });
-    $("#qa-btn").click(function () {
+    $("#qa-btn").click(function() {
         $("#want-to-be").val($("#qa-btn").text());
         selectSkill();
     })
-    $("#support-btn").click(function () {
+    $("#support-btn").click(function() {
         $("#want-to-be").val($("#support-btn").text());
         selectSkill();
     })
-    $("#it-btn").click(function () {
+    $("#it-btn").click(function() {
         $("#want-to-be").val($("#it-btn").text());
         selectSkill();
     })
-    $(".list-group-item").click(function (e) {
+    $(".list-group-item").click(function(e) {
         if ($(this).hasClass("unchecked-list-group")) {
             $(this).removeClass("unchecked-list-group");
         } else {
             $(this).addClass("unchecked-list-group");
         }
     });
-    $("#next-btn").click(function () {
+    $("#next-btn").click(function() {
         $("#landing-container").hide();
-        // $("#skills").show();
-        let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
+        $("#skills-container").show();
+        selectedSkills = skills.filter(skill => {
+            return skill.requiredBy.filter(item => item === role).length > 0 &&
+                excludedSkills.filter(item => item === skill.name).length === 0;
+        });
+        totalSkills = skills.filter(skill => {
+            return skill.requiredBy.filter(item => item === role).length > 0;
+        }).length;
 
         let skillsElement = $(`#skills`);
 
         for (let i = 0; i < selectedSkills.length; i++) {
             makeSkill(skillsElement, selectedSkills[i]);
         }
+        updateProgress();
     });
 
 
     // SKILLS
-    // skills required by our role
-    // skillsElement.hide();
+    $("#skills-container").hide();
 });
 
 function selectSkill() {
@@ -186,24 +196,21 @@ function selectSkill() {
 
     $(".skills-btn").remove();
 
-    let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
+    selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
     for (let i = 0; i < selectedSkills.length; ++i) {
         skillsRowElement.prepend(`<button class="btn btn-default skills-btn" type="button">${selectedSkills[i].name}</button>`);
     }
 
-        $(".skills-btn").hover(function() {
-        if ($(this).hasClass("skills-btn-active")) {
-            $(this).removeClass("skills-btn-active");
-        } else {
-            $(this).addClass("skills-btn-active");
-        }
-        
-    });
     $(".skills-btn").click(function() {
         if ($(this).hasClass("skills-btn-active")) {
             $(this).removeClass("skills-btn-active");
+            let index = excludedSkills.indexOf($(this).text());
+            if (index >= 0) {
+                excludedSkills.splice(index, 1);
+            }
         } else {
             $(this).addClass("skills-btn-active");
+            excludedSkills.push($(this).text());
         }
     });
 
@@ -242,7 +249,7 @@ function makeResource(element, resource) {
     `);
     element.append(resourceElement);
 
-    resourceElement.click(function () {
+    resourceElement.click(function() {
         let dialog = $("#dialog");
 
         let dialogText = $('#dialogText');
@@ -253,17 +260,27 @@ function makeResource(element, resource) {
 
         dialog.dialog({
             modal: true,
-            buttons: [
-                {
-                    text: "OK",
-                    click: function () {
-                        $(this).dialog("close");
-                    }
-                }
-            ],
             title: resource.name,
             width: 600,
             height: 600,
         });
     })
+}
+
+function updateProgress() {
+    let finished = totalSkills - selectedSkills.length;
+    for (let i = 0; i < selectedSkills.length; ++i) {
+        let done = false;
+        for (let j = 0; j < selectedSkills[i].resources.length; ++j) {
+            if (selectedSkills[i].resources[j].status === "Completed") {
+                done = true;
+                break;
+            }
+        }
+        if (done) {
+            finished++;
+        }
+    }
+    let percentage = totalSkills === 0 ? "100" : ((finished / totalSkills) * 100).toFixed(0);
+    $("#progress").text(`I am ${percentage}% to becoming a ${role}.`);
 }
