@@ -1,6 +1,8 @@
-var ROW_SIZE = 5;
+var ROW_SIZE = 4;
 
 var role = "QA"; // TODO
+var freeOnly = true;
+
 var skills = [
     {
         name: "Java",
@@ -10,6 +12,9 @@ var skills = [
                 name: "Google",
                 url: "http://google.ca",
                 imageUrl: "http://images.dailytech.com/nimage/G_is_For_Google_New_Logo_Thumb.png",
+                trusted: true,
+                votes: 25,
+                free: true,
             },
         ],
     },
@@ -21,6 +26,9 @@ var skills = [
                 name: "Google",
                 url: "http://google.ca",
                 imageUrl: "http://images.dailytech.com/nimage/G_is_For_Google_New_Logo_Thumb.png",
+                trusted: true,
+                votes: 25,
+                free: true,
             },
         ],
     },
@@ -32,36 +40,57 @@ var skills = [
                 name: "W3Schools",
                 url: "http://www.w3schools.com/sql/",
                 imageUrl: "http://www.w3schools.com/images/w3cert.gif",
+                trusted: true,
+                votes: 25,
+                free: true,
             },
             {
                 name: "W4Schools",
                 url: "http://www.w3schools.com/sql/",
                 imageUrl: "http://www.w3schools.com/images/w3cert.gif",
+                trusted: false,
+                votes: 0,
+                free: true,
+            },
+            {
+                name: "Coursera",
+                url: "",
+                imageUrl: "",
+                trusted: true,
+                votes: 0,
+                free: true,
+            },
+            {
+                name: "W5Schools",
+                url: "http://www.w3schools.com/sql/",
+                imageUrl: "http://www.w3schools.com/images/w3cert.gif",
+                trusted: false,
+                votes: 100,
+                free: true,
+            },
+            {
+                name: "W3$chools",
+                url: "http://www.w3schools.com/sql/",
+                imageUrl: "http://www.w3schools.com/images/w3cert.gif",
+                trusted: false,
+                votes: 0,
+                free: false,
             },
             {
                 name: "W3Schools",
                 url: "http://www.w3schools.com/sql/",
                 imageUrl: "http://www.w3schools.com/images/w3cert.gif",
+                trusted: false,
+                votes: 0,
+                free: true,
             },
             {
                 name: "W3Schools",
                 url: "http://www.w3schools.com/sql/",
                 imageUrl: "http://www.w3schools.com/images/w3cert.gif",
-            },
-            {
-                name: "W3Schools",
-                url: "http://www.w3schools.com/sql/",
-                imageUrl: "http://www.w3schools.com/images/w3cert.gif",
-            },
-            {
-                name: "W3Schools",
-                url: "http://www.w3schools.com/sql/",
-                imageUrl: "http://www.w3schools.com/images/w3cert.gif",
-            },
-            {
-                name: "W3Schools",
-                url: "http://www.w3schools.com/sql/",
-                imageUrl: "http://www.w3schools.com/images/w3cert.gif",
+                trusted: false,
+                votes: 0,
+                free: true,
             },
         ],
     },
@@ -78,23 +107,53 @@ $(document).ready(function () {
 function makeSkill(element, skill) {
     let skillElement = $(`<div class="row">`);
 
-    // TODO sorting of some kind
-    let resources = skill.resources.filter(resource => true);
+    // TODO sorting/filtering
+    let resources = skill.resources.filter(resource => !freeOnly || resource.free);
+    resources.sort((a, b) => {
+        let votesA = a.trusted ? 50 + a.votes : a.votes;
+        let votesB = b.trusted ? 50 + b.votes : b.votes;
 
+        return votesB - votesA;
+    });
+
+    skillElement.append(`<p id=${skill.name} class="col-sm-2">${skill.name}</p>`);
     for (let i = 0; i < resources.length && i < ROW_SIZE; i++) {
         makeResource(skillElement, resources[i]);
     }
 
-    element.append(`<h1 id=${skill.name}>${skill.name}</h1>`);
     element.append(skillElement);
     element.append(`</div>`);
 }
 
 function makeResource(element, resource) {
     let resourceElement = element.append(`
-    <span class="col-md-2">
-        ${resource.name}
-        <a href=${resource.url}><img src=${resource.imageUrl} style="width:82px; height:86px" title="White flower" alt="Flower"></a>
+    <span class="col-sm-2 resource-cell">
+        <div class="resource-title">${resource.name}</div>
+        <div class="resource-thumbnail">
+            <img src="${resource.imageUrl}" height="80" width="80" title="Resource">
+        </div>
     </span>
     `);
+
+    resourceElement.click(function () {
+        let dialog = $("#dialog")
+        dialog.attr("title", resource.name);
+
+        let dialogText = $('#dialogText');
+        dialogText.text(resource.name + resource.name);
+
+        dialog.dialog({
+            modal: true,
+            buttons: [
+                {
+                    text: "OK",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ],
+            width: 600,
+            height: 600,
+        });
+    })
 }

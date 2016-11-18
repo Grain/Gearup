@@ -7,6 +7,11 @@
 
   <script src="jquery-3.1.1.min.js" type="text/javascript"></script>
 
+  <!--<script src="jquery.modal.min.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="jquery.modal.css" type="text/css" media="screen" />-->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
@@ -21,9 +26,30 @@
 
   <script src="dashboard.js" type="text/javascript"></script>
 </head>
+<style>
+.resource-cell {
+  /*position: relative;*/
+  display: flex;
+  flex-direction: column;
+  border: solid;
+  margin: 5px;
+  padding: 5px;
+}
+.resource-title {
+  text-align: center;
+}
+.resource-thumbnail {
+  text-align: center;
+}
+</style>
 
-<body>
+<body style="margin: 20px;">
   <span id="skills"></span>
+ 
+  <div id="dialog" title="Title" style="display:none;">
+    <p id="dialogText"></p>
+    <img src="https://avatars2.githubusercontent.com/u/5269779?v=3&s=60" height="400" width="400" title="Resource">
+  </div>
 </body>
 
 </html>
