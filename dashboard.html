@@ -27,19 +27,28 @@
   <script src="dashboard.js" type="text/javascript"></script>
 </head>
 <style>
-.resource-cell {
+.skill-name {
+  font-size: 200%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cell {
   /*position: relative;*/
   display: flex;
   flex-direction: column;
   border: solid;
   margin: 5px;
   padding: 5px;
+  width: 150px;
+  height: 100px;
 }
 .resource-title {
-  text-align: center;
+  text-align: left;
 }
 .resource-thumbnail {
-  text-align: center;
+  text-align: left;
+  margin-top: auto;
 }
 </style>
 
@@ -48,7 +57,7 @@
  
   <div id="dialog" title="Title" style="display:none;">
     <p id="dialogText"></p>
-    <img src="https://avatars2.githubusercontent.com/u/5269779?v=3&s=60" height="400" width="400" title="Resource">
+    <img id="dialogImage" src="https://avatars2.githubusercontent.com/u/5269779?v=3&s=60" height="400" width="400" title="Resource">
   </div>
 </body>
 

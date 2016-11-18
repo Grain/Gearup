@@ -15,6 +15,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
+                status: "NotStarted",
             },
         ],
     },
@@ -29,6 +30,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
+                status: "InProgress",
             },
         ],
     },
@@ -43,6 +45,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
+                status: "Completed",
             },
             {
                 name: "W4Schools",
@@ -51,6 +54,7 @@ var skills = [
                 trusted: false,
                 votes: 0,
                 free: true,
+                status: "InProgress",
             },
             {
                 name: "Coursera",
@@ -59,6 +63,7 @@ var skills = [
                 trusted: true,
                 votes: 0,
                 free: true,
+                status: "InProgress",
             },
             {
                 name: "W5Schools",
@@ -67,6 +72,7 @@ var skills = [
                 trusted: false,
                 votes: 100,
                 free: true,
+                status: "InProgress",
             },
             {
                 name: "W3$chools",
@@ -75,6 +81,7 @@ var skills = [
                 trusted: false,
                 votes: 0,
                 free: false,
+                status: "InProgress",
             },
             {
                 name: "W3Schools",
@@ -83,6 +90,7 @@ var skills = [
                 trusted: false,
                 votes: 0,
                 free: true,
+                status: "InProgress",
             },
             {
                 name: "W3Schools",
@@ -91,6 +99,7 @@ var skills = [
                 trusted: false,
                 votes: 0,
                 free: true,
+                status: "InProgress",
             },
         ],
     },
@@ -116,7 +125,7 @@ function makeSkill(element, skill) {
         return votesB - votesA;
     });
 
-    skillElement.append(`<p id=${skill.name} class="col-sm-2">${skill.name}</p>`);
+    skillElement.append(`<p id=${skill.name} class="skill-name cell col-sm-2">${skill.name}</p>`);
     for (let i = 0; i < resources.length && i < ROW_SIZE; i++) {
         makeResource(skillElement, resources[i]);
     }
@@ -126,21 +135,24 @@ function makeSkill(element, skill) {
 }
 
 function makeResource(element, resource) {
-    let resourceElement = element.append(`
-    <span class="col-sm-2 resource-cell">
+    let resourceElement = $(`
+    <span class="col-sm-2 cell">
         <div class="resource-title">${resource.name}</div>
         <div class="resource-thumbnail">
-            <img src="${resource.imageUrl}" height="80" width="80" title="Resource">
+            <img src="${resource.imageUrl}" height="30" width="80" title="Resource">
         </div>
     </span>
     `);
+    element.append(resourceElement);
 
     resourceElement.click(function () {
-        let dialog = $("#dialog")
-        dialog.attr("title", resource.name);
+        let dialog = $("#dialog");
 
         let dialogText = $('#dialogText');
-        dialogText.text(resource.name + resource.name);
+        dialogText.text(resource.status);
+
+        let dialogImage = $('#dialogImage');
+        dialogImage.attr("src", resource.imageUrl);
 
         dialog.dialog({
             modal: true,
@@ -152,6 +164,7 @@ function makeResource(element, resource) {
                     }
                 }
             ],
+            title: resource.name,
             width: 600,
             height: 600,
         });
