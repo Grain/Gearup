@@ -258,10 +258,16 @@ function makeResource(element, resource) {
         <div class="resource-title">${resource.name}</div>
         <div class="resource-thumbnail">
             <img src="${resource.imageUrl}" height="30" width="80" title="Resource">
+            &nbsp;
+            <p></p>
         </div>
     </span>
     `);
     element.append(resourceElement);
+    resource.element = resourceElement;
+
+    selectedResource = resource;
+    updateStatus();
 
     resourceElement.click(function() {
         let dialog = $("#dialog");
@@ -319,6 +325,13 @@ function updateStatus() {
     } else {
         $("#unstarted").hide();
         $("#inProgress").show();
+    }
+
+    if (selectedResource.element != null) {
+        let p = selectedResource.element.find("p");
+        if (p != null) {
+            p.text(selectedResource.status);
+        }
     }
 
     updateProgress();
