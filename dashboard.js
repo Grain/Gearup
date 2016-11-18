@@ -147,6 +147,21 @@ var skills = [
             },
         ],
     },
+    {
+        name: "Public Speaking",
+        requiredBy: ["Support Technician", "IT Help Desk"],
+        resources: [
+            {
+                name: "Public Speaking",
+                url: "http://google.ca",
+                imageUrl: "https://www.youtube.com/yt/brand/media/image/YouTube-logo-full_color.png",
+                trusted: true,
+                votes: 40,
+                free: true,
+                status: "Not Started",
+            },
+        ],
+    },
 ];
 $(document).ready(function() {
     // LANDING
