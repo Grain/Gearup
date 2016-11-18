@@ -171,8 +171,27 @@ $(document).ready(function () {
             makeSkill(skillsElement, selectedSkills[i]);
         }
     });
-    $(".skills-btn").hover(function() {
-        alert("n");
+
+
+    // SKILLS
+    // skills required by our role
+    // skillsElement.hide();
+});
+
+function selectSkill() {
+    role = $("#want-to-be").val();
+    $("#im-learning").show();
+    $("#options-col").hide();
+    let skillsRowElement = $("#skills-row");
+
+    $(".skills-btn").remove();
+
+    let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
+    for (let i = 0; i < selectedSkills.length; ++i) {
+        skillsRowElement.prepend(`<button class="btn btn-default skills-btn" type="button">${selectedSkills[i].name}</button>`);
+    }
+
+        $(".skills-btn").hover(function() {
         if ($(this).hasClass("skills-btn-active")) {
             $(this).removeClass("skills-btn-active");
         } else {
@@ -187,25 +206,6 @@ $(document).ready(function () {
             $(this).addClass("skills-btn-active");
         }
     });
-
-    // SKILLS
-    // skills required by our role
-    // skillsElement.hide();
-});
-
-function selectSkill() {
-    role = $("#want-to-be").val();
-
-    window.scrollTo(0, 150);
-    $("#options-col").hide();
-    let skillsRowElement = $("#skills-row");
-
-    $(".skills-btn").remove();
-
-    let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
-    for (let i = 0; i < selectedSkills.length; ++i) {
-        skillsRowElement.prepend(`<button class="btn btn-default skills-btn" type="button">${selectedSkills[i].name}</button>`);
-    }
 
     skillsRowElement.show();
 }
