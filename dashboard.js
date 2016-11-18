@@ -109,7 +109,6 @@ $(document).ready(function () {
     $("#want-to-be").on('keyup', function (e) {
 
         if (e.keyCode == 13) {
-            window.scrollTo(0, 150);
             $("#options-col").hide();
             $("#skills-row").show();
         }
@@ -124,6 +123,21 @@ $(document).ready(function () {
     $("#next-btn").click(function () {
         $("#landing-container").hide();
         $("#skills").show();
+    });
+    $(".skills-btn").hover(function() {
+        if ($(this).hasClass("skills-btn-active")) {
+            $(this).removeClass("skills-btn-active");
+        } else {
+            $(this).addClass("skills-btn-active");
+        }
+        
+    });
+    $(".skills-btn").click(function() {
+        if ($(this).hasClass("skills-btn-active")) {
+            $(this).removeClass("skills-btn-active");
+        } else {
+            $(this).addClass("skills-btn-active");
+        }
     });
 
     // SKILLS
