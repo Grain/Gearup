@@ -1,12 +1,12 @@
 var ROW_SIZE = 4;
 
-var role = "QA"; // TODO
+var role = "QA Tester"; // TODO
 var freeOnly = true;
 
 var skills = [
     {
-        name: "Java",
-        requiredBy: ["QA"],
+        name: "MS Excel",
+        requiredBy: ["QA Tester", "Support Technician", "IT Help Desk"],
         resources: [
             {
                 name: "Google",
@@ -20,8 +20,8 @@ var skills = [
         ],
     },
     {
-        name: "C++",
-        requiredBy: ["TODO"],
+        name: "SQL",
+        requiredBy: ["QA Tester", "Support Technician", "IT Help Desk"],
         resources: [
             {
                 name: "Google",
@@ -35,8 +35,8 @@ var skills = [
         ],
     },
     {
-        name: "SQL",
-        requiredBy: ["QA", "TODO"],
+        name: "Windows",
+        requiredBy: ["QA Tester", "Support Technician", "IT Help Desk"],
         resources: [
             {
                 name: "W3Schools",
@@ -66,7 +66,7 @@ var skills = [
                 status: "InProgress",
             },
             {
-                name: "W5Schools",
+                name: "W5Schools askdjflkjdf kldjflkdjflk jflkjdf lkfjfdkdfjk kj",
                 url: "http://www.w3schools.com/sql/",
                 imageUrl: "http://www.w3schools.com/images/w3cert.gif",
                 trusted: false,
@@ -103,14 +103,40 @@ var skills = [
             },
         ],
     },
+    {
+        name: "Customer Service",
+        requiredBy: ["Support Technician", "IT Help Desk"],
+        resources: [
+            {
+                name: "Google",
+                url: "http://google.ca",
+                imageUrl: "http://images.dailytech.com/nimage/G_is_For_Google_New_Logo_Thumb.png",
+                trusted: true,
+                votes: 25,
+                free: true,
+                status: "InProgress",
+            },
+        ],
+    },
 ];
 $(document).ready(function () {
     // LANDING
     $("#want-to-be").on('keyup', function (e) {
-
         if (e.keyCode == 13) {
+
+            role = $("#want-to-be").val();
+
             $("#options-col").hide();
-            $("#skills-row").show();
+            let skillsRowElement = $("#skills-row");
+
+            $(".skills-btn").remove();
+
+            let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
+            for(let i = 0; i < selectedSkills.length; ++i) {
+                skillsRowElement.prepend(`<button class="btn btn-default skills-btn" type="button">${selectedSkills[i].name}</button>`);
+            }
+
+            skillsRowElement.show();
         }
     });
     $(".list-group-item").click(function (e) {
@@ -122,7 +148,14 @@ $(document).ready(function () {
     });
     $("#next-btn").click(function () {
         $("#landing-container").hide();
-        $("#skills").show();
+        // $("#skills").show();
+        let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item === role).length > 0);
+
+        let skillsElement = $(`#skills`);
+
+        for (let i = 0; i < selectedSkills.length; i++) {
+            makeSkill(skillsElement, selectedSkills[i]);
+        }
     });
     $(".skills-btn").hover(function() {
         if ($(this).hasClass("skills-btn-active")) {
@@ -142,14 +175,7 @@ $(document).ready(function () {
 
     // SKILLS
     // skills required by our role
-    let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item == role).length > 0);
-
-    let skillsElement = $(`#skills`);
-
-    for (let i = 0; i < skills.length; i++) {
-        makeSkill(skillsElement, skills[i]);
-    }
-    skillsElement.hide();
+    // skillsElement.hide();
 });
 
 function makeSkill(element, skill) {
