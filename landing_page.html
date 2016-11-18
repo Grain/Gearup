@@ -8,6 +8,17 @@
   #top-container {
     margin-top:200px;
   }
+  #headline {
+    display:inline-table;
+  }
+  #headline-p {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  #want-to-be {
+    display: table-cell;
+    padding-left:10px;
+  }
   #skills-list {
     padding-top:20px;
     margin-bottom:20px;
@@ -25,7 +36,11 @@
     background-color:khaki !important;
   }
   body {
-    height:1000px;
+    height:400px;
+    width:1000px;
+    background-image: url("assets/bg.png");
+    background-size:105% 95%;
+    font-family:"Segoe UI", sans-serif;
   }
   </style>
   <body>
@@ -35,11 +50,8 @@
 
     <div class="row">
 	    <div class="col-lg-4 col-lg-offset-4">
-	        <div class="input-group">
-	            <input id="want-to-be"type="text" class="form-control" placeholder="I want to be a..."/> 
-	            <span class="input-group-btn">
-	                <button class="btn btn-default" type="button">Go!</button>
-	            </span>
+	        <div class="input-group" id="headline">
+	            <p id="headline-p">I want to be a</p> <input id="want-to-be"type="text" class="form-control" placeholder="Software Engineer"/>
 	        </div><!-- /input-group -->
 	    </div><!-- /.col-lg-4 -->
 	  </div><!-- /.row -->
