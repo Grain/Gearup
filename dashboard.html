@@ -27,34 +27,126 @@
   <script src="dashboard.js" type="text/javascript"></script>
 </head>
 <style>
-.skill-name {
-  font-size: 200%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.cell {
-  /*position: relative;*/
-  display: flex;
-  flex-direction: column;
-  border: solid;
-  margin: 5px;
-  padding: 5px;
-  width: 150px;
-  height: 100px;
-}
-.resource-title {
-  text-align: left;
-}
-.resource-thumbnail {
-  text-align: left;
-  margin-top: auto;
-}
+/* LANDING */
+  #landing-container {
+    margin-top:200px;
+  }
+  #headline {
+    display:inline-table;
+  }
+  #headline-p {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  #want-to-be {
+    display: table-cell;
+    padding-left:10px;
+    border-radius:0px;
+    background-color:#b3f0ff;
+    border:1px solid white;
+    margin-left:10px;
+  }
+  #skills-list {
+    padding-top:20px;
+    margin-bottom:20px;
+  }
+  #skills-row {
+    display:none;
+    margin-left:250px;
+  }
+  .unchecked-list-group {
+    background-color:lightgray !important;
+    color:gray !important;
+  }
+  .list-group-item:hover {
+    cursor:pointer;
+    cursor:hand;
+    background-color:khaki !important;
+  }
+  body {
+    height:400px;
+    width:1000px;
+    background-image: url("assets/bg.png");
+    background-size:105% 95%;
+    font-family:"Open Sans", sans-serif;
+    color:;
+  }
+  #options-col {
+    padding-top:20px;
+  }
+  .skills-btn {
+    width: 130px;
+    height: 130px;
+    border-radius: 0px;
+    padding: 10px;
+  }
+
+  /* DASHBOARD */
+  .skill-name {
+    font-size: 200%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cell {
+    /*position: relative;*/
+    display: flex;
+    flex-direction: column;
+    border: solid;
+    margin: 5px;
+    padding: 5px;
+    width: 150px;
+    height: 100px;
+  }
+  
+  .resource-title {
+    text-align: left;
+  }
+  
+  .resource-thumbnail {
+    text-align: left;
+    margin-top: auto;
+  }
 </style>
 
+
+
 <body style="margin: 20px;">
+  <div class="container" id="landing-container">
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4">
+        <div class="input-group" id="headline">
+          <p id="headline-p">I want to be a</p> <input id="want-to-be" type="text" class="form-control" placeholder="Software Engineer" />
+        </div>
+        <!-- /input-group -->
+      </div>
+      <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4" id="options-col">
+        <button class="btn btn-default" type="button">QA Tester</button>
+        <button class="btn btn-default" type="button">Support Technician</button>
+        <button class="btn btn-default" type="button">IT Help Desk</button>
+      </div>
+      <!-- /.col-lg-4 -->
+    </div>
+
+    <div class="row" id="skills-row">
+      <button class="btn btn-default skills-btn" type="button">MS Excel</button>
+      <button class="btn btn-default skills-btn" type="button">SQL</button>
+      <button class="btn btn-default skills-btn" type="button">Windows</button>
+      <button class="btn btn-default skills-btn" type="button">Customer Service</button>
+      <button id="next-btn" class="btn btn-default" type="button">Next</button>
+      <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+  </div>
+
   <span id="skills"></span>
- 
+
   <div id="dialog" title="Title" style="display:none;">
     <p id="dialogText"></p>
     <img id="dialogImage" src="https://avatars2.githubusercontent.com/u/5269779?v=3&s=60" height="400" width="400" title="Resource">

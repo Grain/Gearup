@@ -105,12 +105,37 @@ var skills = [
     },
 ];
 $(document).ready(function () {
+    // LANDING
+    $("#want-to-be").on('keyup', function (e) {
+
+        if (e.keyCode == 13) {
+            window.scrollTo(0, 150);
+            $("#options-col").hide();
+            $("#skills-row").show();
+        }
+    });
+    $(".list-group-item").click(function (e) {
+        if ($(this).hasClass("unchecked-list-group")) {
+            $(this).removeClass("unchecked-list-group");
+        } else {
+            $(this).addClass("unchecked-list-group");
+        }
+    });
+    $("#next-btn").click(function () {
+        $("#landing-container").hide();
+        $("#skills").show();
+    });
+
+    // SKILLS
     // skills required by our role
     let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item == role).length > 0);
 
+    let skillsElement = $(`#skills`);
+
     for (let i = 0; i < skills.length; i++) {
-        makeSkill($(`#skills`), skills[i]);
+        makeSkill(skillsElement, skills[i]);
     }
+    skillsElement.hide();
 });
 
 function makeSkill(element, skill) {
