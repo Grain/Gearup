@@ -5,14 +5,33 @@
     <title>GearUp</title>
   </head>
   <style>
-  .input-group {
-    top:200px;
+  #top-container {
+    margin-top:200px;
+  }
+  #skills-list {
+    padding-top:20px;
+    margin-bottom:20px;
+  }
+  #skills-row {
+    display:none;
+  }
+  .unchecked-list-group {
+    background-color:lightgray !important;
+    color:gray !important;
+  }
+  .list-group-item:hover {
+    cursor:pointer;
+    cursor:hand;
+    background-color:khaki !important;
+  }
+  body {
+    height:1000px;
   }
   </style>
   <body>
   
   <!-- Page Content -->
-  <div class="container">
+  <div class="container" id="top-container">
 
     <div class="row">
 	    <div class="col-lg-4 col-lg-offset-4">
@@ -23,7 +42,20 @@
 	            </span>
 	        </div><!-- /input-group -->
 	    </div><!-- /.col-lg-4 -->
-	</div><!-- /.row -->
+	  </div><!-- /.row -->
+
+    <div class="row" id="skills-row">
+      <div class="col-lg-4 col-lg-offset-4">
+          <ul class="list-group" id="skills-list">
+            <li class="list-group-item">Javascript</li>
+            <li class="list-group-item">Microsoft Excel</li>
+            <li class="list-group-item">SQL</li>
+            <li class="list-group-item unchecked-list-group">Sharepoint</li>
+            <li class="list-group-item unchecked-list-group">Customer Service</li>
+          </ul>
+          <button class="btn btn-default" type="button">Next</button>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
   </div>
 
   <script src="jquery-3.1.1.min.js" type="text/javascript"></script>
@@ -39,8 +71,16 @@
   $("#want-to-be").on('keyup', function (e) {
 
       if (e.keyCode == 13) {
-          window.scroll(0, 150);
+        window.scrollTo(0, 150);   
+        $("#skills-row").show();
       }
+  });
+  $(".list-group-item").click(function(e) {
+    if ($(this).hasClass("unchecked-list-group")) {
+      $(this).removeClass("unchecked-list-group");
+    } else {
+      $(this).addClass("unchecked-list-group");
+    }
   });
   </script>
   </body>
