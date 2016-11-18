@@ -66,7 +66,7 @@ var skills = [
                 status: "InProgress",
             },
             {
-                name: "W5Schools",
+                name: "W5Schools askdjflkjdf kldjflkdjflk jflkjdf lkfjfdkdfjk kj",
                 url: "http://www.w3schools.com/sql/",
                 imageUrl: "http://www.w3schools.com/images/w3cert.gif",
                 trusted: false,
