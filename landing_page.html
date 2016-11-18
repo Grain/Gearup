@@ -65,9 +65,9 @@
   <div class="container" id="top-container">
 
     <div class="row">
-	    <div class="col-lg-4 col-lg-offset-4">
+	    <div class="col-lg-4 col-lg-offset-4" style="width:800px;margin-left:250px">
 	        <div class="input-group" id="headline">
-	            <p id="headline-p">I want to be a</p> <input id="want-to-be"type="text" class="form-control" placeholder="Software Engineer"/>
+	            <h2 id="headline-p">I want to be a</h2> <input id="want-to-be"type="text" class="form-control" placeholder="Software Engineer"/>
 	        </div><!-- /input-group -->
 	    </div><!-- /.col-lg-4 -->
 	  </div><!-- /.row -->
@@ -81,11 +81,13 @@
     </div>
 
     <div class="row" id="skills-row">
+      <h2>I'm learning...</h2>
       <button class="btn btn-default skills-btn" type="button">MS Excel</button>
       <button class="btn btn-default skills-btn" type="button">SQL</button>
       <button class="btn btn-default skills-btn" type="button">Windows</button>
       <button class="btn btn-default skills-btn" type="button">Customer Service</button>
-      <button class="btn btn-default" type="button"><a href="dashboard.html">Next</a></button>
+      <br>
+      <button class="btn btn-default" type="button"><a href="dashboard.html">I'm done</a></button>
       <!-- /.col-lg-4 -->
     </div><!-- /.row -->
   </div>
@@ -105,7 +107,6 @@
   $("#want-to-be").on('keyup', function (e) {
 
       if (e.keyCode == 13) {
-        window.scrollTo(0, 150);  
         $("#options-col").hide(); 
         $("#skills-row").show();
       }
