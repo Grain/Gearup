@@ -37,21 +37,26 @@ var skills = [
 ];
 $(document).ready(function () {
     // skills required by our role
-    var selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item == role).length > 0);
+    let selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item == role).length > 0);
 
-    for (var i = 0; i < skills.length; i++) {
+    for (let i = 0; i < skills.length; i++) {
         makeSkill($("#skills"), skills[i]);
     }
 });
 
 function makeSkill(element, skill) {
-    var skillElement = element.append(`<h1 id=${skill.name}>${skill.name}</h1>`);
+    let skillElement = element.append(`<h1 id=${skill.name}>${skill.name}</h1>`);
 
-    for (var i = 0; i < skill.resources.length; i++) {
+    for (let i = 0; i < skill.resources.length; i++) {
         makeResource(skillElement, skill.resources[i]);
     }
 }
 
 function makeResource(element, resource) {
-    var resourceElement = element.append(`<h2>${resource.name}</h2>`);
+    let resourceElement = element.append(`
+    <span>
+        ${resource.name} <br>
+        <a href=${resource.url}><img src="flower.jpg" style="width:82px; height:86px" title="White flower" alt="Flower"></a>
+    </span>
+    `);
 }
