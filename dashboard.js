@@ -28,6 +28,10 @@ var skills = [
                 name: "Google",
                 url: "http://google.ca",
             },
+            {
+                name: "GoogleCom",
+                url: "http://google.com",
+            },
         ],
     },
 ];
@@ -35,21 +39,19 @@ $(document).ready(function () {
     // skills required by our role
     var selectedSkills = skills.filter(skill => skill.requiredBy.filter(item => item == role).length > 0);
 
-    // alert(skills.length);
-    for (i = 0; i < skills.length; i++) {
-        makeSkill($("#skills"), skills[1]);
+    for (var i = 0; i < skills.length; i++) {
+        makeSkill($("#skills"), skills[i]);
     }
 });
 
 function makeSkill(element, skill) {
-    var skillElement = $(`<h1 id=${skill.name}>${skill.name}</h1>`);
-    skillElement.appendTo(element);
+    var skillElement = element.append(`<h1 id=${skill.name}>${skill.name}</h1>`);
 
-    // for (i = 0; i < skill.resources.length; i++) {
-    //     makeResource(skillElement, skill.resources[i]);
-    // }
+    for (var i = 0; i < skill.resources.length; i++) {
+        makeResource(skillElement, skill.resources[i]);
+    }
 }
 
 function makeResource(element, resource) {
-    $(`<h2>${resource.name}</h2>`).appendTo(element);
+    var resourceElement = element.append(`<h2>${resource.name}</h2>`);
 }
