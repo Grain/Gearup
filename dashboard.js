@@ -6,6 +6,7 @@ var excludedSkills = [];
 var totalSkills;
 
 var selectedSkills;
+var selectedResource;
 
 var skills = [
     {
@@ -19,7 +20,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "NotStarted",
+                status: "Not Started",
             },
             {
                 name: "Using Formulas and Functions in Excel",
@@ -28,7 +29,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "NotStarted",
+                status: "Not Started",
             },
             {
                 name: "Microsoft Excel Tutorial for Beginners",
@@ -37,7 +38,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "NotStarted",
+                status: "Not Started",
             }
         ],
     },
@@ -52,7 +53,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             },
             {
                 name: "Interactive Tutorial in SQL",
@@ -61,7 +62,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             },
             {
                 name: "Intro to SQL: Querying and Managing Data",
@@ -70,7 +71,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             }
         ],
     },
@@ -85,7 +86,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "Completed",
+                status: "Not Started",
             },
             {
                 name: "Intro to Windows Server",
@@ -94,7 +95,7 @@ var skills = [
                 trusted: false,
                 votes: 0,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             },
             {
                 name: "Microsoft SQL Server Tutorial",
@@ -103,7 +104,7 @@ var skills = [
                 trusted: true,
                 votes: 0,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             },
             {
                 name: "Complete Guide to Using Windows 8",
@@ -112,7 +113,7 @@ var skills = [
                 trusted: false,
                 votes: 100,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             }
         ],
     },
@@ -127,7 +128,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             },
         ],
     },
@@ -142,7 +143,7 @@ var skills = [
                 trusted: true,
                 votes: 25,
                 free: true,
-                status: "InProgress",
+                status: "Not Started",
             },
         ],
     },
@@ -165,6 +166,10 @@ $(document).ready(function() {
     $("#it-btn").click(function() {
         $("#want-to-be").val($("#it-btn").text());
         selectSkill();
+    })
+    $("#start-btn").click(function() {
+        selectedResource.status = "In Progress";
+        updateStatus();
     })
     $(".list-group-item").click(function(e) {
         if ($(this).hasClass("unchecked-list-group")) {
@@ -260,18 +265,15 @@ function makeResource(element, resource) {
 
     resourceElement.click(function() {
         let dialog = $("#dialog");
-
-        let dialogText = $('#dialogText');
-        dialogText.text(resource.status);
-
-        let dialogImage = $('#dialogImage');
-        dialogImage.attr("src", resource.imageUrl);
+        selectedResource = resource;
+        
+        updateStatus();
 
         dialog.dialog({
             modal: true,
             title: resource.name,
             width: 600,
-            height: 600,
+            height: 400,
         });
     })
 }
@@ -292,4 +294,32 @@ function updateProgress() {
     }
     let percentage = totalSkills === 0 ? "100" : ((finished / totalSkills) * 100).toFixed(0);
     $("#progress").text(`I am ${percentage}% to becoming a ${role}.`);
+}
+
+function updateStatus() {
+    let dialogText = $('#dialogText');
+    dialogText.text(selectedResource.name);
+    dialogText.show();
+    $('#dialogImage').attr("src", selectedResource.imageUrl);
+
+    $("#goToCourse").attr("href", selectedResource.url);
+    $("#markAsDone").click(function() {
+        selectedResource.status = "Completed";
+        updateStatus();
+    })
+    $("#abandon").click(function() {
+        selectedResource.status = "Not Started";
+        updateStatus();
+    })
+    $("#statusText").text(selectedResource.status);
+
+    if (selectedResource.status === "Not Started") {
+        $("#unstarted").show();
+        $("#inProgress").hide();
+    } else {
+        $("#unstarted").hide();
+        $("#inProgress").show();
+    }
+
+    updateProgress();
 }
